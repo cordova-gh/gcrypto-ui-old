@@ -3,7 +3,9 @@
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link> |
-      <router-link to="/alert-prices">Alert Prices</router-link>
+      <router-link to="/alert-prices">Alert Prices</router-link> |
+      <router-link to="/parametro-pair-cvs">Parametro Pairs</router-link> |
+      <router-link to="/parametro-candle-cvs">Parametro candles</router-link>
     </div>
     <router-view/>
   </div>

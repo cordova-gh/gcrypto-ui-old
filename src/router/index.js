@@ -14,8 +14,7 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-  ,
+  },
   {
     path: '/alert-prices',
     name: 'Alert Prices',
@@ -23,7 +22,23 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/AlertPrices.vue')
-  }
+  },
+  {
+    path: '/parametro-pair-cvs',
+    name: 'parametro-pair-cvs',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/parametro-pair-cvs.vue')
+  },
+  {
+    path: '/parametro-candle-cvs',
+    name: 'parametro-candle-cvs',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/parametro-candle-cvs.vue')
+  },
 ]
 
 const router = createRouter({
