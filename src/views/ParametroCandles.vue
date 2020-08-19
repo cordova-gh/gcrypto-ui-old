@@ -1,35 +1,33 @@
 <template>
   <div class="about">
-    <h1>This is an Alert Prices page</h1>
+    <h1>This is a Candles page</h1>
       <table class="table">
         <thead>
           <tr>
             <th>ID</th>
-            <th>Price</th>
-            <th>Is support</th>
+            <th>First</th>
+            <th>Second</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(row, index) of list" :key="index">
-            <td>{{ row.id_parametro_pair_cv}}</td>
-            <td>{{ row.price}}</td>
-            <td>{{ row.is_support}}</td>
+            <td>{{ row.id}}</td>
+            <td>{{ row.first_cv}}</td>
+            <td>{{ row.second_cv}}</td>
           </tr>
         </tbody>
       </table>
   </div>
   <form>
     <div class="form-group">
-      Id Parametro:
+      Id:
       <select name="id_parametro_pair_cv">
         <option value="1">BTC/USDT</option>
-      </select>
-      Price:
+      </select>      
+      First:
       <input type="text" />
-      Enable:
-      <input type="checkbox" />
-      Support:
-      <input type="checkbox" /> 
+      Second:
+      <input type="text" />
 
       <input type="submit" value="Invio" />
     </div>
@@ -45,7 +43,7 @@ export default {
   },
   created() {
     axios
-      .get("https://gcrypto.herokuapp.com/alert-prices")
+      .get("https://gcrypto.herokuapp.com/parametro-candle-cvs")
 
       .then((response) => {
         this.list = response.data;
