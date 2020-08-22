@@ -1,39 +1,66 @@
 <template>
-  <div class="about" v-if="!visualizzaForm">
-    <h1>Parametri Pair</h1>
-     <input type="button" class="btn btn-primary" value="Inserisci" @click="prepareInsert">
-    <table class="table">
-      <thead>
+  <div class="container" v-if="!visualizzaForm">
+    <div class="container">
+      <div class="row py-2">
+        <div class="col-8 text-left">
+          <h1>Parametri Pair</h1>
+        </div>
+        <div class="col-4 text-right">
+          <i class="fas fa-plus-circle" @click="prepareInsert()"></i>
+        </div>
+      </div>
+    </div>
+    <table class="table table-striped">
+      <thead class="thead-dark">
         <tr>
-         
           <th>First</th>
           <th>Second</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, index) of list" :key="index">
-
           <td>{{ row.first_cv}}</td>
           <td>{{ row.second_cv}}</td>
         </tr>
       </tbody>
     </table>
-   
   </div>
-  <div class="container" v-if="visualizzaForm"> 
-    <h2>Crea</h2>
-    <form @submit.prevent="saveEntity">
-   
-      <div class="form-group">
-        <label for="first">First:</label>
-        <input type="text" class="form-control" v-model="parametroPair.first_cv" />
-      </div>
-      <div class="form-group">
-        <label for="second">Second:</label>
-        <input type="text" class="form-control" v-model="parametroPair.second_cv" />
-      </div>
-      <button type="submit" class="btn btn-primary">Crea</button>
-    </form>
+  <div class="container bg bg-light border rounded py-3" v-if="visualizzaForm">
+    <h2 class="bg-white">Crea</h2>
+    <div class="container">
+      <form @submit.prevent="saveEntity">
+        <div class="form-group row justify-content-md-center">
+          <label for="first" class="col-2">First:</label>
+          <div class="col-2">
+            <input
+              type="text"
+              class="form-control"
+              v-model="parametroPair.first_cv"
+              maxlength="3"
+              style="text-transform:uppercase"
+            />
+          </div>
+        </div>
+        <div class="form-group row justify-content-md-center">
+          <label for="second" class="col-2">Second:</label>
+          <div class="col-2">
+            <input
+              type="text"
+              class="form-control"
+              v-model="parametroPair.second_cv"
+              maxlength="3"
+              style="text-transform:uppercase"
+            />
+          </div>
+        </div>
+        <div class="form-group row justify-content-md-center">
+          <div class="col-2"></div>
+          <div class="col-2">
+            <button type="submit" class="btn btn-block btn-primary">Crea</button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </template>
 <script>
@@ -43,11 +70,10 @@ export default {
     return {
       list: [],
       parametroPair: {},
-      visualizzaForm: false
+      visualizzaForm: false,
     };
   },
   created() {
-    
     axios
       .get("https://gcrypto.herokuapp.com/parametro-pair-cvs")
       .then((response) => {
@@ -78,9 +104,9 @@ export default {
           return "An error occured.." + error;
         });
     },
-    prepareInsert(){
-      this.visualizzaForm= true;
-    }
+    prepareInsert() {
+      this.visualizzaForm = true;
+    },
   },
 };
 </script>

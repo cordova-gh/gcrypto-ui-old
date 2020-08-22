@@ -23,7 +23,7 @@
   <form @submit.prevent="saveEntity">
     <div class="form-group">
       <label for="exampleInputEmail1">Price</label>
-      <input type="text" class="form-control" v-model="ParametroPair.price" />
+      <input type="text" class="form-control" v-model="alertPrice.price" />
     </div>
     <div class="form-group form-check">
       
@@ -32,7 +32,7 @@
         type="checkbox"
         class="form-check-input"
         id="exampleCheck1"
-        v-model="ParametroPair.flag_enable"
+        v-model="alertPrice.flag_enable"
       />
     </div>
     <div class="form-group form-check">
@@ -41,7 +41,7 @@
         type="checkbox"
         class="form-check-input"
         id="exampleCheck1"
-        v-model="ParametroPair.is_support"
+        v-model="alertPrice.is_support"
       />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
@@ -54,7 +54,7 @@ export default {
   data() {
     return {
       list: [],
-      ParametroPair: {},
+      alertPrice: {},
     };
   },
   created() {
@@ -77,7 +77,7 @@ export default {
       return axios
         .post(
           "https://gcrypto.herokuapp.com/alert-prices",
-          this.ParametroPair,
+          this.alertPrice,
           {
             headers: {
               Accept: "application/json",
