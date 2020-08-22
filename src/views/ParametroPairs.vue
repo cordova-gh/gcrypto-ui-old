@@ -6,7 +6,9 @@
           <h1>Parametri Pair</h1>
         </div>
         <div class="col-4 text-right">
-          <i class="fas fa-plus-circle" @click="prepareInsert()"></i>
+          <a href="#" @click="prepareInsert">
+            <i class="fas fa-plus-circle" />
+          </a>
         </div>
       </div>
     </div>
@@ -15,12 +17,21 @@
         <tr>
           <th>First</th>
           <th>Second</th>
+          <th>Azioni</th>
         </tr>
       </thead>
       <tbody>
         <tr v-for="(row, index) of list" :key="index">
           <td>{{ row.first_cv}}</td>
           <td>{{ row.second_cv}}</td>
+          <td>
+            <a href="#" @click="editEntity(row.id)">
+              <i class="far fa-edit"></i>
+            </a>
+            <a href="#" @click="deleteEntity(row.id)">
+              <i class="far fa-trash-alt" />
+            </a>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -54,9 +65,11 @@
           </div>
         </div>
         <div class="form-group row justify-content-md-center">
-          <div class="col-2"></div>
           <div class="col-2">
-            <button type="submit" class="btn btn-block btn-primary">Crea</button>
+            <input type="button"  class="btn btn-block btn-dark" @click="back" value="Indietro">
+          </div>
+          <div class="col-2">
+            <button type="submit" class="btn btn-block btn-primary">{{titleForm}}</button>
           </div>
         </div>
       </form>
@@ -71,32 +84,27 @@ export default {
       list: [],
       parametroPair: {},
       visualizzaForm: false,
+      urlApi: "https://gcrypto.herokuapp.com",
+      service: "/parametro-pair-cvs",
+      titleForm: 'Salva'
     };
   },
   created() {
-    axios
-      .get("https://gcrypto.herokuapp.com/parametro-pair-cvs")
-      .then((response) => {
-        this.list = response.data;
-        console.log(response);
-      })
-      .catch((error) => {
-        console.log(error);
-        this.errored = true;
-      })
-      .finally(() => (this.loading = false));
+    this.getAllEntities();
   },
   methods: {
     saveEntity() {
-      console.log("entità", this.entity);
       return axios
-        .post("http://localhost:5000/parametro-pair-cvs", this.parametroPair, {
+        .post(this.urlApi + this.service, this.parametroPair, {
           headers: {
             Accept: "application/json",
             "Content-type": "application/json",
           },
         })
-        .then(function (response) {
+        .then((response) => {
+          console.log(response);
+          this.visualizzaForm = false;
+          this.getAllEntities();
           return response.data;
         })
         .catch(function (error) {
@@ -105,8 +113,52 @@ export default {
         });
     },
     prepareInsert() {
+      this.parametroPair={}
       this.visualizzaForm = true;
     },
+    deleteEntity(id) {
+      console.log("DELETE", id);
+      axios
+        .delete(this.urlApi + this.service +'/'+ id)
+        .then((response) => {
+          console.log(response);
+          this.getAllEntities();
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    getAllEntities() {
+      axios
+        .get(this.urlApi + this.service)
+        .then((response) => {
+          this.list = response.data;
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },
+    editEntity(id) {
+      axios
+        .get(this.urlApi + this.service +'/'+ id)
+        .then((response) => {
+          this.parametroPair = response.data;
+          this.visualizzaForm = true;
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errored = true;
+        })
+        .finally(() => (this.loading = false));
+    },back(){
+      this.visualizzaForm= false;
+    }
   },
 };
 </script>
